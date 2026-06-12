@@ -11,37 +11,35 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:        #f7f6f3;
-    --surface:   #ffffff;
-    --border:    #e3e1da;
-    --text:      #1a1917;
-    --muted:     #6b6a66;
-    --accent:    #1a6b4a;
-    --accent-bg: #eaf5ef;
+    --bg:          #f7f6f3;
+    --surface:     #ffffff;
+    --border:      #e3e1da;
+    --text:        #1a1917;
+    --muted:       #6b6a66;
+    --accent:      #1a6b4a;
+    --accent-bg:   #eaf5ef;
     --accent-text: #145239;
-    --warn:      #b45309;
-    --warn-bg:   #fef3c7;
-    --chart-curr: #b0aead;
-    --chart-new:  #1a6b4a;
-    --radius:    10px;
+    --extra:       #1a4a6b;
+    --extra-bg:    #eaf0f5;
+    --extra-text:  #123452;
+    --radius:      10px;
     --mono: 'DM Mono', monospace;
     --sans: 'Inter', sans-serif;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg:        #161614;
-      --surface:   #1f1f1d;
-      --border:    #2e2e2b;
-      --text:      #f0ede8;
-      --muted:     #8a8880;
-      --accent:    #2ecc82;
-      --accent-bg: #0d2b1e;
+      --bg:          #161614;
+      --surface:     #1f1f1d;
+      --border:      #2e2e2b;
+      --text:        #f0ede8;
+      --muted:       #8a8880;
+      --accent:      #2ecc82;
+      --accent-bg:   #0d2b1e;
       --accent-text: #6de8b0;
-      --warn:      #fbbf24;
-      --warn-bg:   #2a1f07;
-      --chart-curr: #6b6a66;
-      --chart-new:  #2ecc82;
+      --extra:       #5ab4f0;
+      --extra-bg:    #0d1e2b;
+      --extra-text:  #8dd4f8;
     }
   }
 
@@ -53,14 +51,9 @@
     padding: 2rem 1rem 4rem;
   }
 
-  .container {
-    max-width: 780px;
-    margin: 0 auto;
-  }
+  .container { max-width: 860px; margin: 0 auto; }
 
-  header {
-    margin-bottom: 2.5rem;
-  }
+  header { margin-bottom: 2.5rem; }
 
   .eyebrow {
     font-family: var(--mono);
@@ -76,12 +69,9 @@
     font-weight: 600;
     line-height: 1.15;
     letter-spacing: -0.02em;
-    color: var(--text);
   }
 
-  h1 span {
-    color: var(--accent);
-  }
+  h1 span { color: var(--accent); }
 
   .subtitle {
     margin-top: 0.5rem;
@@ -114,8 +104,14 @@
     gap: 1rem;
   }
 
-  @media (max-width: 500px) {
-    .fields { grid-template-columns: 1fr; }
+  .fields-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .fields, .fields-3 { grid-template-columns: 1fr; }
   }
 
   .field label {
@@ -125,14 +121,18 @@
     margin-bottom: 6px;
   }
 
-  .input-wrap {
-    position: relative;
+  .field .hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+    opacity: 0.75;
   }
+
+  .input-wrap { position: relative; }
 
   .input-prefix {
     position: absolute;
-    left: 11px;
-    top: 50%;
+    left: 11px; top: 50%;
     transform: translateY(-50%);
     font-family: var(--mono);
     font-size: 13px;
@@ -142,8 +142,7 @@
 
   .input-suffix {
     position: absolute;
-    right: 11px;
-    top: 50%;
+    right: 11px; top: 50%;
     transform: translateY(-50%);
     font-family: var(--mono);
     font-size: 13px;
@@ -170,14 +169,12 @@
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
 
-  input[type="number"]:focus {
-    border-color: var(--accent);
-  }
+  input[type="number"]:focus { border-color: var(--accent); }
 
   .has-prefix input { padding-left: 26px; }
   .has-suffix input { padding-right: 28px; }
 
-  /* Rate slider */
+  /* Slider */
   .slider-row {
     display: flex;
     align-items: center;
@@ -197,8 +194,7 @@
 
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 16px; height: 16px;
     border-radius: 50%;
     background: var(--accent);
     cursor: pointer;
@@ -207,8 +203,7 @@
   }
 
   input[type="range"]::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
+    width: 16px; height: 16px;
     border-radius: 50%;
     background: var(--accent);
     cursor: pointer;
@@ -225,15 +220,57 @@
     text-align: right;
   }
 
-  /* Results grid */
-  .results-grid {
+  /* Extra repayment card accent */
+  .card.extra-card {
+    border-color: var(--extra);
+    border-left: 3px solid var(--extra);
+  }
+
+  .card.extra-card .card-title { color: var(--extra); }
+
+  /* Saving banner */
+  .saving-banner {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     margin-bottom: 1rem;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
+    .saving-banner { grid-template-columns: 1fr 1fr; }
+  }
+
+  .saving-item .saving-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-text);
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+
+  .saving-item .saving-val {
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--accent-text);
+    letter-spacing: -0.02em;
+  }
+
+  /* Results grid — 3 columns */
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 700px) {
     .results-grid { grid-template-columns: 1fr; }
   }
 
@@ -244,9 +281,8 @@
     padding: 1.25rem;
   }
 
-  .result-card.highlight {
-    border-color: var(--accent);
-  }
+  .result-card.highlight-green { border-color: var(--accent); }
+  .result-card.highlight-blue  { border-color: var(--extra); border-left: 3px solid var(--extra); }
 
   .result-card-header {
     display: flex;
@@ -273,15 +309,9 @@
     font-weight: 500;
   }
 
-  .badge-green {
-    background: var(--accent-bg);
-    color: var(--accent-text);
-  }
-
-  .badge-gray {
-    background: var(--border);
-    color: var(--muted);
-  }
+  .badge-green { background: var(--accent-bg); color: var(--accent-text); }
+  .badge-blue  { background: var(--extra-bg);  color: var(--extra-text); }
+  .badge-gray  { background: var(--border);     color: var(--muted); }
 
   .metric-row {
     display: flex;
@@ -293,10 +323,7 @@
   }
 
   .metric-row:last-child { border-bottom: none; }
-
-  .metric-row .metric-label {
-    color: var(--muted);
-  }
+  .metric-row .metric-label { color: var(--muted); }
 
   .metric-row .metric-val {
     font-family: var(--mono);
@@ -305,43 +332,8 @@
     color: var(--text);
   }
 
-  .metric-row .metric-val.good {
-    color: var(--accent);
-  }
-
-  /* Saving banner */
-  .saving-banner {
-    background: var(--accent-bg);
-    border: 1px solid var(--accent);
-    border-radius: var(--radius);
-    padding: 1.25rem 1.5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  @media (max-width: 500px) {
-    .saving-banner { grid-template-columns: 1fr; }
-  }
-
-  .saving-item .saving-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent-text);
-    opacity: 0.7;
-    margin-bottom: 4px;
-  }
-
-  .saving-item .saving-val {
-    font-family: var(--mono);
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--accent-text);
-    letter-spacing: -0.03em;
-  }
+  .metric-row .metric-val.good  { color: var(--accent); }
+  .metric-row .metric-val.extra { color: var(--extra); }
 
   /* Chart */
   .chart-card {
@@ -353,7 +345,8 @@
 
   .chart-legend {
     display: flex;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-bottom: 1rem;
   }
 
@@ -367,8 +360,7 @@
   }
 
   .legend-dot {
-    width: 10px;
-    height: 10px;
+    width: 10px; height: 10px;
     border-radius: 2px;
     flex-shrink: 0;
   }
@@ -376,7 +368,7 @@
   .chart-wrap {
     position: relative;
     width: 100%;
-    height: 220px;
+    height: 240px;
   }
 
   footer {
@@ -386,12 +378,6 @@
     line-height: 1.6;
     font-family: var(--mono);
   }
-
-  footer a {
-    color: var(--muted);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
 </style>
 </head>
 <body>
@@ -400,10 +386,10 @@
   <header>
     <p class="eyebrow">NZ Mortgage Tool</p>
     <h1>Refix <span>rate calculator</span></h1>
-    <p class="subtitle">Compare your current fixed rate against a new one — same term, lower payment.</p>
+    <p class="subtitle">Compare your current rate, new minimum payment, and the impact of paying extra each month.</p>
   </header>
 
-  <!-- Inputs -->
+  <!-- Current loan inputs -->
   <div class="card">
     <p class="card-title">Your loan details</p>
     <div class="fields">
@@ -442,20 +428,59 @@
     </div>
   </div>
 
-  <!-- Saving banner -->
-  <div class="saving-banner" id="savingBanner">
-    <div class="saving-item">
-      <p class="saving-label">Monthly saving</p>
-      <p class="saving-val" id="monthlySaving">—</p>
-    </div>
-    <div class="saving-item">
-      <p class="saving-label">Total interest saving</p>
-      <p class="saving-val" id="totalSaving">—</p>
+  <!-- Extra repayment inputs -->
+  <div class="card extra-card">
+    <p class="card-title">Extra repayments (new rate)</p>
+    <div class="fields-3">
+      <div class="field">
+        <label for="extraMonthly">Extra per month</label>
+        <div class="input-wrap has-prefix">
+          <span class="input-prefix">$</span>
+          <input type="number" id="extraMonthly" value="200" step="50" min="0" />
+        </div>
+        <p class="hint">Added on top of the minimum payment each month</p>
+      </div>
+      <div class="field">
+        <label for="extraLumpSum">One-off lump sum</label>
+        <div class="input-wrap has-prefix">
+          <span class="input-prefix">$</span>
+          <input type="number" id="extraLumpSum" value="0" step="1000" min="0" />
+        </div>
+        <p class="hint">Applied at the start of the new term</p>
+      </div>
+      <div class="field">
+        <label for="lumpSumMonth">Lump sum at month #</label>
+        <div class="input-wrap">
+          <input type="number" id="lumpSumMonth" value="1" step="1" min="1" max="360" />
+        </div>
+        <p class="hint">Month 1 = immediately on refix</p>
+      </div>
     </div>
   </div>
 
-  <!-- Results -->
+  <!-- Saving banner -->
+  <div class="saving-banner" id="savingBanner">
+    <div class="saving-item">
+      <p class="saving-label">Min payment saving</p>
+      <p class="saving-val" id="monthlySaving">—</p>
+    </div>
+    <div class="saving-item">
+      <p class="saving-label">Interest saving (min)</p>
+      <p class="saving-val" id="totalSaving">—</p>
+    </div>
+    <div class="saving-item">
+      <p class="saving-label">Time saved w/ extra</p>
+      <p class="saving-val" id="timeSaved">—</p>
+    </div>
+    <div class="saving-item">
+      <p class="saving-label">Interest saved w/ extra</p>
+      <p class="saving-val" id="interestSavedExtra">—</p>
+    </div>
+  </div>
+
+  <!-- Results: 3 columns -->
   <div class="results-grid">
+    <!-- Current -->
     <div class="result-card">
       <div class="result-card-header">
         <span class="result-card-label">Current</span>
@@ -466,15 +491,29 @@
       <div class="metric-row"><span class="metric-label">Total interest</span><span class="metric-val" id="currInterest">—</span></div>
       <div class="metric-row"><span class="metric-label">Total repaid</span><span class="metric-val" id="currTotal">—</span></div>
     </div>
-    <div class="result-card highlight">
+
+    <!-- New rate, min payment -->
+    <div class="result-card highlight-green">
       <div class="result-card-header">
         <span class="result-card-label">New rate</span>
         <span class="badge badge-green" id="newRateBadge">5.19%</span>
       </div>
-      <div class="metric-row"><span class="metric-label">Loan term</span><span class="metric-val" id="newTerm">—</span></div>
-      <div class="metric-row"><span class="metric-label">Monthly payment</span><span class="metric-val good" id="newPayment">—</span></div>
+      <div class="metric-row"><span class="metric-label">Loan term</span><span class="metric-val good" id="newTerm">—</span></div>
+      <div class="metric-row"><span class="metric-label">Min. monthly payment</span><span class="metric-val good" id="newPayment">—</span></div>
       <div class="metric-row"><span class="metric-label">Total interest</span><span class="metric-val good" id="newInterest">—</span></div>
       <div class="metric-row"><span class="metric-label">Total repaid</span><span class="metric-val good" id="newTotal">—</span></div>
+    </div>
+
+    <!-- New rate + extra -->
+    <div class="result-card highlight-blue">
+      <div class="result-card-header">
+        <span class="result-card-label">With extra</span>
+        <span class="badge badge-blue" id="extraBadge">+$200/mo</span>
+      </div>
+      <div class="metric-row"><span class="metric-label">Loan term</span><span class="metric-val extra" id="extraTerm">—</span></div>
+      <div class="metric-row"><span class="metric-label">Total monthly payment</span><span class="metric-val extra" id="extraPayment">—</span></div>
+      <div class="metric-row"><span class="metric-label">Total interest</span><span class="metric-val extra" id="extraInterest">—</span></div>
+      <div class="metric-row"><span class="metric-label">Total repaid</span><span class="metric-val extra" id="extraTotal">—</span></div>
     </div>
   </div>
 
@@ -482,16 +521,17 @@
   <div class="chart-card">
     <p class="card-title">Balance over time</p>
     <div class="chart-legend">
-      <div class="legend-item"><span class="legend-dot" style="background:var(--chart-curr)"></span><span id="legendCurr">Current rate</span></div>
-      <div class="legend-item"><span class="legend-dot" style="background:var(--chart-new)"></span><span id="legendNew">New rate</span></div>
+      <div class="legend-item"><span class="legend-dot" id="dotCurr" style="background:#b0aead"></span><span id="legendCurr">Current rate</span></div>
+      <div class="legend-item"><span class="legend-dot" id="dotNew"  style="background:#1a6b4a"></span><span id="legendNew">New rate (min)</span></div>
+      <div class="legend-item"><span class="legend-dot" id="dotExtra" style="background:#1a4a6b"></span><span id="legendExtra">New rate + extra</span></div>
     </div>
     <div class="chart-wrap">
-      <canvas id="balChart" role="img" aria-label="Remaining balance over time for current vs new interest rate"></canvas>
+      <canvas id="balChart" role="img" aria-label="Remaining balance over time for current rate, new minimum payment, and new rate with extra repayments"></canvas>
     </div>
   </div>
 
   <footer>
-    <p>Indicative only. Assumes constant rate for the full term. Consult your bank or mortgage adviser before refixing.</p>
+    <p>Indicative only. Assumes constant interest rate for the full term. Does not account for break fees, refix costs, or rate changes. Consult your bank or a mortgage adviser before making decisions.</p>
   </footer>
 
 </div>
@@ -499,7 +539,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
   let chart;
-
   const $ = id => document.getElementById(id);
 
   function fmt(n) {
@@ -510,84 +549,136 @@
     return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
+  function termStr(months) {
+    const y = Math.floor(months / 12), m = months % 12;
+    return y + (m > 0 ? ' yr ' + m + ' mo' : ' yr');
+  }
+
+  // Standard loan: fixed monthly payment
   function calcLoan(balance, annualRate, monthlyPayment) {
     const r = annualRate / 100 / 12;
-    if (r <= 0 || monthlyPayment <= 0) return null;
-    const num = monthlyPayment - r * balance;
-    if (num <= 0) return null;
+    if (r <= 0 || monthlyPayment <= balance * r) return null;
     const months = Math.ceil(-Math.log(1 - r * balance / monthlyPayment) / Math.log(1 + r));
     if (!isFinite(months) || months <= 0 || months > 1200) return null;
     let bal = balance, totalInterest = 0;
-    const schedule = [{ m: 0, bal: balance }];
+    const schedule = [balance];
     for (let i = 0; i < months; i++) {
       const interest = bal * r;
       totalInterest += interest;
       bal = Math.max(0, bal + interest - monthlyPayment);
-      schedule.push({ m: i + 1, bal });
+      schedule.push(bal);
     }
     return { months, totalInterest, schedule };
   }
 
-  function calcPayment(balance, annualRate, months) {
+  // Minimum payment formula for a given term
+  function calcMinPayment(balance, annualRate, months) {
     const r = annualRate / 100 / 12;
     if (r === 0) return balance / months;
     return balance * r * Math.pow(1 + r, months) / (Math.pow(1 + r, months) - 1);
   }
 
+  // Loan with variable extra: extra monthly + one-off lump sum at a specific month
+  function calcLoanExtra(balance, annualRate, minPayment, extraMonthly, lumpSum, lumpSumMonth) {
+    const r = annualRate / 100 / 12;
+    if (r <= 0) return null;
+    let bal = balance, totalInterest = 0, months = 0;
+    const schedule = [balance];
+    const MAX = 1200;
+    while (bal > 0.01 && months < MAX) {
+      months++;
+      // Apply lump sum at the specified month
+      if (months === lumpSumMonth && lumpSum > 0) {
+        bal = Math.max(0, bal - lumpSum);
+      }
+      const interest = bal * r;
+      totalInterest += interest;
+      const payment = Math.min(bal + interest, minPayment + extraMonthly);
+      bal = Math.max(0, bal + interest - payment);
+      schedule.push(bal);
+    }
+    return { months, totalInterest, schedule };
+  }
+
   function render() {
-    const balance = parseFloat($('balance').value);
-    const currentRate = parseFloat($('currentRate').value);
-    const currentPayment = parseFloat($('currentPayment').value);
-    const newRate = parseFloat($('newRate').value);
+    const balance       = parseFloat($('balance').value)        || 0;
+    const currentRate   = parseFloat($('currentRate').value)    || 0;
+    const currentPmt    = parseFloat($('currentPayment').value) || 0;
+    const newRate       = parseFloat($('newRate').value)        || 0;
+    const extraMonthly  = Math.max(0, parseFloat($('extraMonthly').value)  || 0);
+    const lumpSum       = Math.max(0, parseFloat($('extraLumpSum').value)  || 0);
+    const lumpSumMonth  = Math.max(1, parseInt($('lumpSumMonth').value)    || 1);
 
     $('currRateBadge').textContent = currentRate.toFixed(2) + '%';
-    $('newRateBadge').textContent = newRate.toFixed(2) + '%';
-    $('legendCurr').textContent = 'Current ' + currentRate.toFixed(2) + '%';
-    $('legendNew').textContent = 'New ' + newRate.toFixed(2) + '%';
+    $('newRateBadge').textContent  = newRate.toFixed(2) + '%';
+    $('extraBadge').textContent    = extraMonthly > 0 ? '+' + fmt(extraMonthly) + '/mo' : (lumpSum > 0 ? fmt(lumpSum) + ' lump' : 'no extra');
 
-    const curr = calcLoan(balance, currentRate, currentPayment);
+    const curr = calcLoan(balance, currentRate, currentPmt);
     if (!curr) return;
 
-    const newPmt = calcPayment(balance, newRate, curr.months);
-    const newLoan = calcLoan(balance, newRate, newPmt);
+    const newMinPmt = calcMinPayment(balance, newRate, curr.months);
+    const newLoan   = calcLoan(balance, newRate, newMinPmt);
     if (!newLoan) return;
 
-    const yrs = Math.floor(curr.months / 12);
-    const mos = curr.months % 12;
-    const termStr = yrs + (mos > 0 ? ' yr ' + mos + ' mo' : ' yr');
+    const extra = calcLoanExtra(balance, newRate, newMinPmt, extraMonthly, lumpSum, lumpSumMonth);
+    if (!extra) return;
 
-    $('currTerm').textContent = termStr;
-    $('currPayment').textContent = fmtDec(currentPayment);
+    // --- Populate current column ---
+    $('currTerm').textContent     = termStr(curr.months);
+    $('currPayment').textContent  = fmtDec(currentPmt);
     $('currInterest').textContent = fmt(curr.totalInterest);
-    $('currTotal').textContent = fmt(balance + curr.totalInterest);
+    $('currTotal').textContent    = fmt(balance + curr.totalInterest);
 
-    $('newTerm').textContent = termStr;
-    $('newPayment').textContent = fmtDec(newPmt);
+    // --- Populate new rate (min) column ---
+    $('newTerm').textContent     = termStr(newLoan.months);
+    $('newPayment').textContent  = fmtDec(newMinPmt);
     $('newInterest').textContent = fmt(newLoan.totalInterest);
-    $('newTotal').textContent = fmt(balance + newLoan.totalInterest);
+    $('newTotal').textContent    = fmt(balance + newLoan.totalInterest);
 
-    const monthlySaving = currentPayment - newPmt;
-    const totalSaving = curr.totalInterest - newLoan.totalInterest;
+    // --- Populate extra column ---
+    $('extraTerm').textContent     = termStr(extra.months);
+    $('extraPayment').textContent  = fmtDec(newMinPmt + extraMonthly);
+    $('extraInterest').textContent = fmt(extra.totalInterest);
+    $('extraTotal').textContent    = fmt(balance + extra.totalInterest);
 
-    $('monthlySaving').textContent = (monthlySaving >= 0 ? '+' : '') + fmtDec(monthlySaving) + '/mo';
-    $('totalSaving').textContent = fmt(totalSaving);
+    // --- Saving banner ---
+    const monthlySaving      = currentPmt - newMinPmt;
+    const totalSaving        = curr.totalInterest - newLoan.totalInterest;
+    const monthsSaved        = newLoan.months - extra.months;
+    const interestSavedExtra = newLoan.totalInterest - extra.totalInterest;
 
-    // Chart — sample every 3 months
-    const step = Math.max(1, Math.floor(curr.months / 80));
-    const labels = [], dCurr = [], dNew = [];
+    $('monthlySaving').textContent    = (monthlySaving >= 0 ? '+' : '') + fmtDec(monthlySaving) + '/mo';
+    $('totalSaving').textContent      = fmt(totalSaving);
+    $('timeSaved').textContent        = monthsSaved > 0 ? termStr(monthsSaved) : '—';
+    $('interestSavedExtra').textContent = interestSavedExtra > 0 ? fmt(interestSavedExtra) : '—';
 
-    for (let m = 0; m <= curr.months; m += step) {
+    // --- Chart ---
+    const maxMonths = curr.months;
+    const step = Math.max(1, Math.floor(maxMonths / 80));
+    const labels = [], dCurr = [], dNew = [], dExtra = [];
+
+    for (let m = 0; m <= maxMonths; m += step) {
       const yr = m / 12;
-      labels.push(yr % 1 === 0 ? 'Yr ' + yr : '');
-      dCurr.push(curr.schedule[Math.min(m, curr.schedule.length - 1)]?.bal ?? 0);
-      dNew.push(newLoan.schedule[Math.min(m, newLoan.schedule.length - 1)]?.bal ?? 0);
+      labels.push(yr % 1 === 0 ? 'Yr ' + Math.round(yr) : '');
+      dCurr.push(curr.schedule[Math.min(m, curr.schedule.length - 1)] ?? 0);
+      dNew.push(newLoan.schedule[Math.min(m, newLoan.schedule.length - 1)] ?? 0);
+      dExtra.push(extra.schedule[Math.min(m, extra.schedule.length - 1)] ?? 0);
     }
 
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark    = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
     const tickColor = isDark ? '#6b6a66' : '#9a9893';
-    const currColor = isDark ? '#6b6a66' : '#b0aead';
-    const newColor = isDark ? '#2ecc82' : '#1a6b4a';
+    const cCurr  = isDark ? '#6b6a66' : '#b0aead';
+    const cNew   = isDark ? '#2ecc82' : '#1a6b4a';
+    const cExtra = isDark ? '#5ab4f0' : '#1a4a6b';
+
+    // Update legend dots
+    $('dotCurr').style.background  = cCurr;
+    $('dotNew').style.background   = cNew;
+    $('dotExtra').style.background = cExtra;
+    $('legendCurr').textContent  = 'Current ' + currentRate.toFixed(2) + '%';
+    $('legendNew').textContent   = 'New ' + newRate.toFixed(2) + '% (min)';
+    $('legendExtra').textContent = 'New ' + newRate.toFixed(2) + '% + extra';
 
     if (chart) chart.destroy();
     chart = new Chart($('balChart'), {
@@ -598,7 +689,7 @@
           {
             label: 'Current',
             data: dCurr,
-            borderColor: currColor,
+            borderColor: cCurr,
             backgroundColor: 'transparent',
             borderWidth: 1.5,
             pointRadius: 0,
@@ -606,20 +697,32 @@
             borderDash: [4, 3]
           },
           {
-            label: 'New rate',
+            label: 'New rate (min)',
             data: dNew,
-            borderColor: newColor,
-            backgroundColor: isDark ? 'rgba(46,204,130,0.08)' : 'rgba(26,107,74,0.08)',
+            borderColor: cNew,
+            backgroundColor: isDark ? 'rgba(46,204,130,0.06)' : 'rgba(26,107,74,0.06)',
             borderWidth: 2,
             pointRadius: 0,
             tension: 0.3,
             fill: true
+          },
+          {
+            label: 'New rate + extra',
+            data: dExtra,
+            borderColor: cExtra,
+            backgroundColor: isDark ? 'rgba(90,180,240,0.08)' : 'rgba(26,74,107,0.08)',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: true,
+            borderDash: [2, 2]
           }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
         plugins: {
           legend: { display: false },
           tooltip: {
@@ -646,10 +749,11 @@
     });
   }
 
-  // Sync slider ↔ number input
+  // Sync rate slider
   $('newRateSlider').addEventListener('input', e => {
-    $('newRate').value = parseFloat(e.target.value).toFixed(2);
-    $('rateDisplay').textContent = parseFloat(e.target.value).toFixed(2) + '%';
+    const v = parseFloat(e.target.value);
+    $('newRate').value = v.toFixed(2);
+    $('rateDisplay').textContent = v.toFixed(2) + '%';
     render();
   });
 
@@ -662,7 +766,7 @@
     render();
   });
 
-  ['balance', 'currentRate', 'currentPayment'].forEach(id => {
+  ['balance','currentRate','currentPayment','extraMonthly','extraLumpSum','lumpSumMonth'].forEach(id => {
     $(id).addEventListener('input', render);
   });
 
